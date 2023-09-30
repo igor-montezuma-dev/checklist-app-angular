@@ -12,7 +12,14 @@ import { HomeComponent } from './home/home.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 
 @NgModule({
-  declarations: [AppComponent, CategoryComponent, HeaderComponent, FooterComponent, HomeComponent, PageNotFoundComponent],
+  declarations: [
+    AppComponent,
+    CategoryComponent,
+    HeaderComponent,
+    FooterComponent,
+    HomeComponent,
+    PageNotFoundComponent,
+  ],
   imports: [
     BrowserModule,
     AppRoutingModule,
