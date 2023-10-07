@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Category } from '../_models/category';
+import { MatDialog } from '@angular/material/dialog';
+import { DialogComponent } from '../dialog/dialog.component';
 
 export const CATEGORY_DATA = [
   { name: 'Educação', guid: 'aaa-bbb-ccc-ddd' },
@@ -17,14 +19,30 @@ export class CategoryComponent implements OnInit {
   public displayedColumns: string[] = ['id', 'name', 'actions'];
   public dataSource: Category[] = CATEGORY_DATA;
 
-  constructor() {}
+  constructor(private dialog: MatDialog) {}
   ngOnInit(): void {}
 
   public editCategory(category: Category) {
     console.log('Clicou');
   }
   public deleteCategory(category: Category) {
-    console.log('Clicou');
+    this.dialog
+      .open(DialogComponent, {
+        disableClose: true,
+        data: {
+          dialogMsg: 'Deseja continuar com esta ação?',
+          leftButtonLabel: 'Cancelar',
+          rightButtonLabel: 'Confirmar',
+        },
+      })
+      .afterClosed()
+      .subscribe((resp) => {
+        if (resp) {
+          console.log('Categoria removida!');
+        } else {
+          console.log('Erro ao remover categoria.');
+        }
+      });
   }
   public createNewCategory() {
     console.log('Clicou');

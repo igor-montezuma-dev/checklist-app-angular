@@ -28,3 +28,13 @@ body {
 .mr-10 {
   margin-right: 10px !important;
 }
+
+.flxs-center-row {
+  display: flex !important;
+  flex-direction: row;
+  align-items: center;
+}
+
+.flx-evly {
+  justify-content: space-evenly;
+}
