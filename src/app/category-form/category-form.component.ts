@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Category } from '../_models/category';
 
 @Component({
   selector: 'app-category-form',
@@ -7,20 +8,33 @@ import { FormBuilder, FormGroup } from '@angular/forms';
   styleUrls: ['./category-form.component.css'],
 })
 export class CategoryFormComponent implements OnInit {
-  public actionName = 'Editar';
+  @Input() public actionName = 'Editar';
   public categoryForm: FormGroup;
 
-  constructor(private formBuilder: FormBuilder) {
+  @Output() closeModalEventEmitter: EventEmitter<boolean> =
+    new EventEmitter<boolean>();
+
+  @Input() public editableCategory!: Category;
+
+  public isFormReady = false;
+
+  constructor(private formBuilder: FormBuilder) {}
+  ngOnInit(): void {
     this.categoryForm = this.formBuilder.group({
-      name: 'nome',
+      name: [
+        this.editableCategory != null ? this.editableCategory.name : '',
+        Validators.required,
+      ],
     });
+    this.isFormReady = true;
   }
-  ngOnInit(): void {}
 
   public cancel() {
     console.log('Cancelar');
+    this.closeModalEventEmitter.emit(false);
   }
   public save() {
     console.log('Salvar');
+    this.closeModalEventEmitter.emit(true);
   }
 }
