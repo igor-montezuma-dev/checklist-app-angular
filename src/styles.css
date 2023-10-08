@@ -38,3 +38,6 @@ body {
 .flx-evly {
   justify-content: space-evenly;
 }
+.w-300 {
+  width: 300px;
+}
