@@ -35,7 +35,7 @@ export class CategoryComponent implements OnInit {
       })
       .afterClosed()
       .subscribe((resp) => {
-        console.log('Modal apagar fechada.');
+        console.log('Modal editar fechada.');
       });
   }
   public deleteCategory(category: Category) {
@@ -58,6 +58,16 @@ export class CategoryComponent implements OnInit {
       });
   }
   public createNewCategory() {
-    console.log('Clicou');
+    this.dialog
+      .open(CategoryEditComponent, {
+        disableClose: true,
+        data: {
+          actionName: 'Criar',
+        },
+      })
+      .afterClosed()
+      .subscribe((resp) => {
+        console.log('Modal criar fechada.');
+      });
   }
 }
