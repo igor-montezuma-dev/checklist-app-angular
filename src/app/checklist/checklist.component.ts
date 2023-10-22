@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CATEGORY_DATA } from '../category/category.component';
+import { ChecklistItem } from '../_models/checklistItem';
 
 export const CHECKLIST_DATA = [
   {
@@ -44,5 +45,17 @@ export class ChecklistComponent implements OnInit {
 
   public createNewItem() {
     console.log('Criar novo item');
+  }
+
+  public updateCompleteStatus(status: boolean) {
+    console.log(`Status do item alterado ${status}`);
+  }
+
+  public deleteChecklistItem(checklistItem: ChecklistItem) {
+    console.log(`Removendo item`);
+  }
+
+  public updateChecklistItem(checklistItem: ChecklistItem) {
+    console.log(`Atualizando item`);
   }
 }
