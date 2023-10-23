@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { CATEGORY_DATA } from '../category/category.component';
 import { ChecklistItem } from '../_models/checklistItem';
+import { DialogComponent } from '../dialog/dialog.component';
+import { MatDialog } from '@angular/material/dialog';
+import { ChecklistEditComponent } from '../checklist-edit/checklist-edit.component';
 
 export const CHECKLIST_DATA = [
   {
@@ -39,12 +42,23 @@ export class ChecklistComponent implements OnInit {
     'actions',
   ];
 
-  constructor() {}
+  constructor(private dialog: MatDialog) {}
 
   ngOnInit(): void {}
 
   public createNewItem() {
     console.log('Criar novo item');
+    this.dialog
+      .open(ChecklistEditComponent, {
+        disableClose: true,
+        data: {
+          actionName: 'Criar',
+        },
+      })
+      .afterClosed()
+      .subscribe((resp) => {
+        console.log('Janela fechada');
+      });
   }
 
   public updateCompleteStatus(status: boolean) {
@@ -53,9 +67,35 @@ export class ChecklistComponent implements OnInit {
 
   public deleteChecklistItem(checklistItem: ChecklistItem) {
     console.log(`Removendo item`);
+
+    this.dialog
+      .open(DialogComponent, {
+        disableClose: true,
+        data: {
+          msg: 'Deseja remover este item?',
+          leftButtonLabel: 'Cancelar',
+          rightButtonLabel: 'Ok',
+        },
+      })
+      .afterClosed()
+      .subscribe((resp) => {
+        console.log('Janela fechada');
+      });
   }
 
   public updateChecklistItem(checklistItem: ChecklistItem) {
     console.log(`Atualizando item`);
+    this.dialog
+      .open(ChecklistEditComponent, {
+        disableClose: true,
+        data: {
+          updatableChecklistItem: checklistItem,
+          actionName: 'Editar',
+        },
+      })
+      .afterClosed()
+      .subscribe((resp) => {
+        console.log('Janela fechada');
+      });
   }
 }
