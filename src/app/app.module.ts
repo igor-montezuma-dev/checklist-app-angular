@@ -16,6 +16,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { DialogComponent } from './dialog/dialog.component';
 import { ChecklistComponent } from './checklist/checklist.component';
 import { ChecklistEditComponent } from './checklist-edit/checklist-edit.component';
+import { ChecklistFormComponent } from './checklist-form/checklist-form.component';
 
 @NgModule({
   declarations: [
@@ -30,6 +31,7 @@ import { ChecklistEditComponent } from './checklist-edit/checklist-edit.componen
     DialogComponent,
     ChecklistComponent,
     ChecklistEditComponent,
+    ChecklistFormComponent,
   ],
   imports: [
     BrowserModule,
