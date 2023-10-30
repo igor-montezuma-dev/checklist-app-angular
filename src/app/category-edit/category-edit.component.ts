@@ -13,7 +13,7 @@ export class CategoryEditComponent implements OnInit {
   public actionName: string = 'Editar';
 
   constructor(
-    private dialogRef: MatDialogRef<CategoryEditComponent>,
+    private modalRef: MatDialogRef<CategoryEditComponent>,
     @Inject(MAT_DIALOG_DATA) dialogData: any
   ) {
     if (dialogData.editableCategory != null) {
@@ -25,9 +25,7 @@ export class CategoryEditComponent implements OnInit {
   }
   ngOnInit(): void {}
 
-  public closeModalWindow($event: any) {
-    if ($event != null) {
-      this.dialogRef.close();
-    }
+  closeModalWindow($event: any) {
+    if ($event != null) this.modalRef.close($event);
   }
 }
