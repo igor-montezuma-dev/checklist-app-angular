@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Category } from '../../_models/category';
+import { SnackbarService } from './../../services/snackbar/snackbar.service';
 
 import { DialogComponent } from '../../dialog/dialog.component';
 import { CategoryService } from '../../services/category/category.service';
@@ -17,7 +18,8 @@ export class CategoryComponent implements OnInit {
 
   constructor(
     private dialog: MatDialog,
-    private categoryService: CategoryService
+    private categoryService: CategoryService,
+    private SnackbarService: SnackbarService
   ) {}
 
   ngOnInit(): void {
@@ -40,7 +42,9 @@ export class CategoryComponent implements OnInit {
       })
       .afterClosed()
       .subscribe((resp) => {
-        console.log('Modal editar fechada.');
+        if (resp) {
+          this.SnackbarService.showSnackBar('Categoria atualizada!', 'ok');
+        }
       });
   }
   public deleteCategory(category: Category) {
@@ -56,7 +60,7 @@ export class CategoryComponent implements OnInit {
       .afterClosed()
       .subscribe((resp) => {
         if (resp) {
-          console.log('Categoria removida!');
+          this.SnackbarService.showSnackBar('Categoria removida!', 'ok');
         } else {
           console.log('Erro ao remover categoria.');
         }
@@ -72,7 +76,9 @@ export class CategoryComponent implements OnInit {
       })
       .afterClosed()
       .subscribe((resp) => {
-        console.log('Modal criar fechada.');
+        if (resp) {
+          this.SnackbarService.showSnackBar('Categoria criada!', 'ok');
+        }
       });
   }
 }
