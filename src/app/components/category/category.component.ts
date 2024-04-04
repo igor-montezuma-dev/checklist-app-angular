@@ -1,15 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { Category } from '../_models/category';
 import { MatDialog } from '@angular/material/dialog';
-import { DialogComponent } from '../dialog/dialog.component';
-import { CategoryEditComponent } from '../category-edit/category-edit.component';
+import { Category } from '../../_models/category';
 
-export const CATEGORY_DATA = [
-  { name: 'Educação', guid: 'aaa-bbb-ccc-ddd' },
-  { name: 'Saúde', guid: 'aaa-bbb-ccc-ddd' },
-  { name: 'Trabalho', guid: 'aaa-bbb-ccc-ddd' },
-  { name: 'Outros', guid: 'aaa-bbb-ccc-ddd' },
-];
+import { DialogComponent } from '../../dialog/dialog.component';
+import { CategoryService } from '../../services/category/category.service';
+import { CategoryEditComponent } from '../category-edit/category-edit.component';
 
 @Component({
   selector: 'app-category',
@@ -18,10 +13,20 @@ export const CATEGORY_DATA = [
 })
 export class CategoryComponent implements OnInit {
   public displayedColumns: string[] = ['id', 'name', 'actions'];
-  public dataSource: Category[] = CATEGORY_DATA;
+  public dataSource: Category[] = [];
 
-  constructor(private dialog: MatDialog) {}
-  ngOnInit(): void {}
+  constructor(
+    private dialog: MatDialog,
+    private categoryService: CategoryService
+  ) {}
+
+  ngOnInit(): void {
+    this.categoryService
+      .getAllCategories()
+      .subscribe((categories: Category[]) => {
+        this.dataSource = categories;
+      });
+  }
 
   public editCategory(inputCategory: Category) {
     console.log('Clicou');

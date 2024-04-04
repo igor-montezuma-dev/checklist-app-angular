@@ -1,21 +1,22 @@
 import {
   Component,
+  EventEmitter,
   Input,
   OnInit,
   Output,
-  EventEmitter,
   ViewChild,
 } from '@angular/core';
 
-import { ChecklistItem } from '../_models/checklistItem';
 import {
   FormBuilder,
   FormGroup,
   FormGroupDirective,
   Validators,
 } from '@angular/forms';
-import { Category } from '../_models/category';
-import { CATEGORY_DATA } from '../category/category.component';
+
+import { Category } from '../../_models/category';
+import { ChecklistItem } from '../../_models/checklistItem';
+import { CategoryService } from '../../services/category/category.service';
 
 @Component({
   selector: 'app-checklist-form',
@@ -29,11 +30,26 @@ export class ChecklistFormComponent implements OnInit {
 
   @ViewChild(FormGroupDirective)
   checklistFormGroupDirective!: FormGroupDirective;
-  public categories: Category[] = CATEGORY_DATA;
+  public categories: Category[] = [];
   public checklistForm!: FormGroup;
 
-  constructor(private formBuilder: FormBuilder) {}
+  constructor(
+    private formBuilder: FormBuilder,
+    private categoryService: CategoryService
+  ) {}
   ngOnInit(): void {
+    this.categoryService.getAllCategories().subscribe({
+      next: (response: Category[]) => {
+        this.categories = response;
+        this.buildForm();
+      },
+      error: (error) => {
+        console.error('Erro ao buscar categorias', error);
+      },
+    });
+  }
+
+  private buildForm() {
     this.checklistForm = this.formBuilder.group({
       completed: [
         this.checklistItem ?? null ? this.checklistItem.completed : false,

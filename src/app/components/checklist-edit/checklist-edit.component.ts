@@ -1,7 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { ChecklistItem } from '../_models/checklistItem';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { inject } from '@angular/core/testing';
+import { ChecklistItem } from '../../_models/checklistItem';
+
 
 @Component({
   selector: 'app-checklist-edit',

@@ -1,28 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { CATEGORY_DATA } from '../category/category.component';
-import { ChecklistItem } from '../_models/checklistItem';
-import { DialogComponent } from '../dialog/dialog.component';
 import { MatDialog } from '@angular/material/dialog';
+import { ChecklistItem } from '../../_models/checklistItem';
+
+
+import { DialogComponent } from '../../dialog/dialog.component';
+import { ChecklistService } from '../../services/checklist/checklist.service';
 import { ChecklistEditComponent } from '../checklist-edit/checklist-edit.component';
 
-export const CHECKLIST_DATA = [
-  {
-    guid: 'aaa-bbb-ccc-ddd',
-    completed: false,
-    description: 'Ir à academia',
-    deadline: Date.now(),
-    postDate: Date.now(),
-    category: CATEGORY_DATA.find((x) => x.name == 'Saúde'),
-  },
-  {
-    guid: 'aaa-bbb-ccc-ddd',
-    completed: true,
-    description: 'Reunião com o time',
-    deadline: Date.now(),
-    postDate: Date.now(),
-    category: CATEGORY_DATA.find((x) => x.name == 'Trabalho'),
-  },
-];
+
 
 @Component({
   selector: 'app-checklist',
@@ -30,7 +15,7 @@ export const CHECKLIST_DATA = [
   styleUrls: ['./checklist.component.css'],
 })
 export class ChecklistComponent implements OnInit {
-  public dataSource = CHECKLIST_DATA;
+  public dataSource: ChecklistItem[] = [];
 
   public displayedColumns: string[] = [
     'id',
@@ -42,9 +27,18 @@ export class ChecklistComponent implements OnInit {
     'actions',
   ];
 
-  constructor(private dialog: MatDialog) {}
+  constructor(private dialog: MatDialog, private checklistService: ChecklistService) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.checklistService.getAllChecklistItems().subscribe({
+      next: (response: ChecklistItem[]) => {
+        this.dataSource = response;
+      },
+      error: (error) => {
+        console.error('Erro ao buscar itens da checklist', error);
+      },
+    });
+  }
 
   public createNewItem() {
     console.log('Criar novo item');
