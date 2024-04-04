@@ -19,7 +19,7 @@ export class CategoryComponent implements OnInit {
   constructor(
     private dialog: MatDialog,
     private categoryService: CategoryService,
-    private SnackbarService: SnackbarService
+    private snackbarService: SnackbarService
   ) {}
 
   ngOnInit(): void {
@@ -43,7 +43,7 @@ export class CategoryComponent implements OnInit {
       .afterClosed()
       .subscribe((resp) => {
         if (resp) {
-          this.SnackbarService.showSnackBar('Categoria atualizada!', 'ok');
+          this.snackbarService.showSnackBar('Categoria atualizada!', 'ok');
         }
       });
   }
@@ -60,7 +60,7 @@ export class CategoryComponent implements OnInit {
       .afterClosed()
       .subscribe((resp) => {
         if (resp) {
-          this.SnackbarService.showSnackBar('Categoria removida!', 'ok');
+          this.snackbarService.showSnackBar('Categoria removida!', 'ok');
         } else {
           console.log('Erro ao remover categoria.');
         }
@@ -77,7 +77,7 @@ export class CategoryComponent implements OnInit {
       .afterClosed()
       .subscribe((resp) => {
         if (resp) {
-          this.SnackbarService.showSnackBar('Categoria criada!', 'ok');
+          this.snackbarService.showSnackBar('Categoria criada!', 'ok');
         }
       });
   }

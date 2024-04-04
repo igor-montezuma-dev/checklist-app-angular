@@ -2,12 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ChecklistItem } from '../../_models/checklistItem';
 
-
 import { DialogComponent } from '../../dialog/dialog.component';
 import { ChecklistService } from '../../services/checklist/checklist.service';
+import { SnackbarService } from '../../services/snackbar/snackbar.service';
 import { ChecklistEditComponent } from '../checklist-edit/checklist-edit.component';
-
-
 
 @Component({
   selector: 'app-checklist',
@@ -27,7 +25,11 @@ export class ChecklistComponent implements OnInit {
     'actions',
   ];
 
-  constructor(private dialog: MatDialog, private checklistService: ChecklistService) {}
+  constructor(
+    private dialog: MatDialog,
+    private checklistService: ChecklistService,
+    private snackBarService: SnackbarService
+  ) {}
 
   ngOnInit(): void {
     this.checklistService.getAllChecklistItems().subscribe({
@@ -51,7 +53,9 @@ export class ChecklistComponent implements OnInit {
       })
       .afterClosed()
       .subscribe((resp) => {
-        console.log('Janela fechada');
+        if (resp) {
+          this.snackBarService.showSnackBar('Item criado!', 'ok');
+        }
       });
   }
 
@@ -60,8 +64,6 @@ export class ChecklistComponent implements OnInit {
   }
 
   public deleteChecklistItem(checklistItem: ChecklistItem) {
-    console.log(`Removendo item`);
-
     this.dialog
       .open(DialogComponent, {
         disableClose: true,
@@ -73,12 +75,13 @@ export class ChecklistComponent implements OnInit {
       })
       .afterClosed()
       .subscribe((resp) => {
-        console.log('Janela fechada');
+        if (resp) {
+          this.snackBarService.showSnackBar('Item removido!', 'ok');
+        }
       });
   }
 
   public updateChecklistItem(checklistItem: ChecklistItem) {
-    console.log(`Atualizando item`);
     this.dialog
       .open(ChecklistEditComponent, {
         disableClose: true,
@@ -89,7 +92,9 @@ export class ChecklistComponent implements OnInit {
       })
       .afterClosed()
       .subscribe((resp) => {
-        console.log('Janela fechada');
+        if (resp) {
+          this.snackBarService.showSnackBar('Item atualizado!', 'ok');
+        }
       });
   }
 }

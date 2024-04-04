@@ -11,10 +11,10 @@ import { CategoryComponent } from './components/category/category.component';
 import { ChecklistEditComponent } from './components/checklist-edit/checklist-edit.component';
 import { ChecklistFormComponent } from './components/checklist-form/checklist-form.component';
 import { ChecklistComponent } from './components/checklist/checklist.component';
+import { HomeComponent } from './components/home/home.component';
 import { DialogComponent } from './dialog/dialog.component';
 import { FooterComponent } from './footer/footer.component';
 import { HeaderComponent } from './header/header.component';
-import { HomeComponent } from './home/home.component';
 import { MaterialModule } from './material.module';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 
